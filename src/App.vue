@@ -1,26 +1,27 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <app-header />
+  <main class="home">
+    <div class="container">
+      <section class="catalog">
+        <h1 class="catalog__title">Каталог курсов</h1>
+        <catalog-search />
+      </section>
+    </div>
+  </main>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import catalogSearch from "@/components/app-search/app-search.vue";
+import appHeader from "@/components/app-header/app-header.vue";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  components: { appHeader, catalogSearch },
+};
 </script>
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family: FuturaPT, normal;
+  font-weight: 600;
 }
 </style>

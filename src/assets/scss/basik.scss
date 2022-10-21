@@ -1,0 +1,30 @@
+.container {
+  width: 100%;
+  padding-left: 15 + px;
+  padding-right: 15 + px;
+  margin: 0 auto;
+  max-width: $wxl;
+
+  @media (min-width: $sm) {
+    padding-left: 30 + px;
+    padding-right: 30 + px;
+  }
+
+  // @media (min-width: $md) {
+  // 	max-width: $wmd;
+  // }
+  // @media (min-width: $lg) {
+  // 	max-width: $wlg;
+  // }
+  // @media (min-width: $xl) {
+  // 	max-width: $wxl;
+  // }
+  @media (min-width: $xxl) {
+    width: 100%;
+    max-width: $wxxl;
+  }
+}
+
+body {
+  overflow-y: scroll;
+}
