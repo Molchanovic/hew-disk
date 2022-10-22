@@ -20,7 +20,13 @@
 
 <style scoped lang="scss">
 svg {
-  width: 16px;
-  height: 16px;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+
+  @media (max-width: $mxxl) {
+    width: 16px;
+    height: 16px;
+  }
 }
 </style>

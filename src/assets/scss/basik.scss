@@ -28,3 +28,17 @@
 body {
   overflow-y: scroll;
 }
+
+h1 {
+  color: $color-dark;
+  font-weight: 600;
+  $fs: 42;
+  font-size: calc($fs / $f-size) + em;
+  line-height: calc(50 / $fs * 100%);
+
+  @media (max-width: $msm) {
+    $fs: 35;
+    font-size: calc($fs / $f-size) + em;
+    line-height: calc(40 / $fs * 100%);
+  }
+}

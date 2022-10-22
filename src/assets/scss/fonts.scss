@@ -24,3 +24,21 @@
   font-weight: 500;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'HouschkaPro';
+  src: local('HouschkaPro Bold'), local('HouschkaPro-Bold'),
+    url('~@/assets/fonts/HouschkaPro-Bold.woff2') format('woff2'),
+    url('~@/assets/fonts/HouschkaPro-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'HouschkaPro';
+  src: local('HouschkaPro ExtraBold'), local('HouschkaPro-ExtraBold'),
+    url('~@/assets/fonts/HouschkaPro-ExtraBold.woff2') format('woff2'),
+    url('~@/assets/fonts/HouschkaPro-ExtraBold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+}

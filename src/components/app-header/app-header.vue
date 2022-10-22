@@ -16,5 +16,9 @@ export default {
 <style lang="scss">
 .header {
   padding: 30px 0px 10px 0px;
+
+  @media (max-width: $msm) {
+    padding-top: 12px;
+  }
 }
 </style>
