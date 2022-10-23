@@ -12,7 +12,7 @@
           </li>
         </ul>
 
-        <catalog-pagination :pageCount="9" />
+        <catalog-pagination :pageCount="catalogPosts.length" />
       </section>
     </div>
   </main>
@@ -32,7 +32,7 @@ export default {
       catalogPosts: [
         {
           id: 3,
-          preview_img_path: "@/assets/img/gallery/pic-img.png",
+          preview_img_path: "pic-img.png",
           title: "Базовые принципы разработки решений с блокчейн",
           cost: 135000,
           cost_currency: "₽",
@@ -40,7 +40,7 @@ export default {
         },
         {
           id: 8,
-          preview_img_path: "@/assets/img/gallery/pic-img.png",
+          preview_img_path: "pic-img.png",
           title:
             "Базовые принципы разработки решений с блокчейн. Продвинутый уровень",
           cost: 80000,
@@ -49,7 +49,7 @@ export default {
         },
         {
           id: 1,
-          preview_img_path: "@/assets/img/gallery/pic-img.png",
+          preview_img_path: "pic-img.png",
           title: "Как добывают нефть",
           cost: 135000,
           cost_currency: "₽",
@@ -57,7 +57,7 @@ export default {
         },
         {
           id: 6,
-          preview_img_path: "@/assets/img/gallery/pic-img.png",
+          preview_img_path: "pic-img.png",
           title: "Как добывают нефть. Продвинутый уровень",
           cost: 150000,
           cost_currency: "₽",
@@ -65,7 +65,7 @@ export default {
         },
         {
           id: 2,
-          preview_img_path: "@/assets/img/gallery/pic-img.png",
+          preview_img_path: "pic-img.png",
           title:
             "Основы искусственного интеллекта и машинного обучения с Python",
           cost: 135000,
@@ -74,7 +74,7 @@ export default {
         },
         {
           id: 7,
-          preview_img_path: "@/assets/img/gallery/pic-img.png",
+          preview_img_path: "pic-img.png",
           title:
             "Основы искусственного интеллекта и машинного обучения с Python. Продвинутый уровень",
           cost: 150000,
@@ -83,7 +83,7 @@ export default {
         },
         {
           id: 4,
-          preview_img_path: "@/assets/img/gallery/pic-img.png",
+          preview_img_path: "pic-img.png",
           title: "Продажи от «А» до «Я»",
           cost: 135000,
           cost_currency: "₽",
@@ -91,7 +91,7 @@ export default {
         },
         {
           id: 9,
-          preview_img_path: "c@/assets/img/gallery/pic-img.png",
+          preview_img_path: "pic-img.png",
           title: "Продажи от «А» до «Я». Продвинутый уровень",
           cost: 160000,
           cost_currency: "₽",
@@ -99,7 +99,7 @@ export default {
         },
         {
           id: 10,
-          preview_img_path: "@/assets/img/gallery/pic-img.png",
+          preview_img_path: "pic-img.png",
           title: "Прокрастинация: как не откладывать дела",
           cost: 135000,
           cost_currency: "₽",
@@ -107,7 +107,7 @@ export default {
         },
         {
           id: 5,
-          preview_img_path: "@/assets/img/gallery/pic-img.png",
+          preview_img_path: "pic-img.png",
           title: "Прокрастинация: как не откладывать дела. Продвинутый уровень",
           cost: 150000,
           cost_currency: "₽",
@@ -131,7 +131,62 @@ export default {
   font-weight: 600;
 }
 
-main {
+.home {
   padding-top: 20px;
+  padding-bottom: 60px;
+}
+.catalog {
+  &__title {
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 15px;
+    justify-content: space-between;
+
+    li {
+      $grid: 31.8;
+      flex: 0 0 0% + $grid;
+      max-width: 0% + $grid;
+      margin-bottom: 30px;
+
+      &:nth-child(n + 7) {
+        margin-bottom: 0px;
+      }
+
+      @media (max-width: $mxl) {
+        $grid: 48.5;
+        flex: 0 0 0% + $grid;
+        max-width: 0% + $grid;
+
+        &:nth-child(n) {
+          margin-bottom: 30px;
+        }
+
+        &:nth-child(n + 6) {
+          margin-bottom: 0px;
+        }
+      }
+
+      @media (max-width: $msm) {
+        $grid: 100;
+        flex: 0 0 0% + $grid;
+        max-width: 0% + $grid;
+        margin-bottom: 10px;
+
+        &:nth-child(n) {
+          margin-bottom: 10px;
+        }
+
+        &:nth-child(n + 6) {
+          margin-bottom: 0px;
+        }
+      }
+    }
+  }
+
+  &__item {
+  }
 }
 </style>

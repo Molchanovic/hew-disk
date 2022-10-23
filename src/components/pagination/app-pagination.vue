@@ -3,9 +3,7 @@
     <div class="pagination__wrapper">
       <button class="pagination__btn"><icon-arrow /></button>
       <ul class="pagination__list">
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
+        <li @click="getConsole" v-for="num of allPages" :key="num"></li>
       </ul>
       <button class="pagination__btn pagination__btn_reverse">
         <icon-arrow />
@@ -19,10 +17,44 @@ export default {
   components: {
     iconArrow,
   },
+  data() {
+    return {
+      windowWidht: 0,
+      selectPage: 1,
+    };
+  },
+  created() {
+    window.addEventListener("resize", this.widthWindow);
+    this.widthWindow();
+  },
   props: {
     pageCount: {
       type: Number,
       required: true,
+    },
+  },
+  methods: {
+    widthWindow() {
+      console.log(this.drawPages);
+      this.windowWidht = window.innerWidth;
+    },
+  },
+  computed: {
+    allPages() {
+      if (this.windowWidht > 1200) {
+        return Math.ceil(this.pageCount / 9);
+      } else if (this.windowWidht > 767) {
+        return Math.ceil(this.pageCount / 6);
+      } else {
+        return Math.ceil(this.pageCount / 3);
+      }
+    },
+    drawPages() {
+      const arrayPages = [];
+      for (let i = 1; i !== this.allPage + 1; i++) {
+        arrayPages.push(i);
+      }
+      return arrayPages;
     },
   },
 };
