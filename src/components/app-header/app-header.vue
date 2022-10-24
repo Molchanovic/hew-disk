@@ -1,7 +1,9 @@
 <template>
   <header class="header">
     <div class="container">
-      <icon-header />
+      <a href="/">
+        <icon-header />
+      </a>
     </div>
   </header>
 </template>

@@ -1,11 +1,24 @@
 <template>
   <div class="pagination">
     <div class="pagination__wrapper">
-      <button class="pagination__btn"><icon-arrow /></button>
+      <button @click="clickPreviousPage" class="pagination__btn">
+        <icon-arrow />
+      </button>
       <ul class="pagination__list">
-        <li @click="getConsole" v-for="num of allPages" :key="num"></li>
+        <li
+          class="pagination__li"
+          :class="{ active: selectPage == num }"
+          @click="clickNewPage(num)"
+          v-for="num of arrayAllPages"
+          :key="num"
+        >
+          {{ num }}
+        </li>
       </ul>
-      <button class="pagination__btn pagination__btn_reverse">
+      <button
+        @click="clickNextPage"
+        class="pagination__btn pagination__btn_reverse"
+      >
         <icon-arrow />
       </button>
     </div>
@@ -21,11 +34,13 @@ export default {
     return {
       windowWidht: 0,
       selectPage: 1,
+      arrayAllPages: [],
     };
   },
   created() {
     window.addEventListener("resize", this.widthWindow);
     this.widthWindow();
+    this.arrayAllPages = this.drawPages;
   },
   props: {
     pageCount: {
@@ -35,26 +50,47 @@ export default {
   },
   methods: {
     widthWindow() {
-      console.log(this.drawPages);
       this.windowWidht = window.innerWidth;
+      this.arrayAllPages = this.drawPages;
+    },
+    clickNewPage(page) {
+      this.selectPage = page;
+      this.emitEventClick();
+    },
+    clickNextPage() {
+      if (this.selectPage < this.allPages) {
+        this.selectPage += 1;
+      }
+      this.emitEventClick();
+    },
+    clickPreviousPage() {
+      if (this.selectPage > 1) {
+        this.selectPage -= 1;
+      }
+      this.emitEventClick();
+    },
+    emitEventClick() {
+      this.$emit("click-pagination", this.selectPage);
     },
   },
   computed: {
     allPages() {
       if (this.windowWidht > 1200) {
         return Math.ceil(this.pageCount / 9);
-      } else if (this.windowWidht > 767) {
+      } else if (this.windowWidht > 567) {
         return Math.ceil(this.pageCount / 6);
       } else {
         return Math.ceil(this.pageCount / 3);
       }
     },
     drawPages() {
-      const arrayPages = [];
-      for (let i = 1; i !== this.allPage + 1; i++) {
-        arrayPages.push(i);
+      let arrayValue = [];
+      let i = 1;
+      while (i <= this.allPages) {
+        arrayValue.push(i);
+        i++;
       }
-      return arrayPages;
+      return arrayValue;
     },
   },
 };
@@ -114,23 +150,29 @@ export default {
 
   &__list {
     display: flex;
-    li {
-      margin-right: 10px;
-      $fs: 18;
+  }
+
+  &__li {
+    margin-right: 10px;
+    $fs: 18;
+    font-size: calc($fs / $f-size) + em;
+    line-height: calc(28 / $fs * 100%);
+    font-weight: 700;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    @media (max-width: $msm) {
+      $fs: 15;
       font-size: calc($fs / $f-size) + em;
-      line-height: calc(28 / $fs * 100%);
+      line-height: calc(24 / $fs * 100%);
       font-weight: 700;
+    }
 
-      &:last-child {
-        margin-right: 0;
-      }
-
-      @media (max-width: $msm) {
-        $fs: 15;
-        font-size: calc($fs / $f-size) + em;
-        line-height: calc(24 / $fs * 100%);
-        font-weight: 700;
-      }
+    &.active {
+      background: $color-dark;
+      color: $color-white;
     }
   }
 }

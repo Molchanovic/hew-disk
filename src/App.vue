@@ -4,15 +4,27 @@
     <div class="container">
       <section class="catalog">
         <h1 class="catalog__title">Каталог курсов</h1>
-        <catalog-search @input="parseData" />
+        <catalog-search @seatch-text="setSearchText" />
+        <div class="catalog__row-top">
+          <results-cards :allResult="searchCatalodResults.length" />
+          <catalog-sort />
+        </div>
 
         <ul class="catalog__list">
-          <li v-for="item of catalogPosts" :key="item.id" class="catalog__item">
+          <li
+            v-for="item of searchCatalodResults"
+            :key="item.id"
+            class="catalog__item"
+          >
             <catalog-item :item="item" />
           </li>
         </ul>
 
-        <catalog-pagination :pageCount="catalogPosts.length" />
+        <catalog-pagination
+          v-if="this.catalogPosts.length > allPages"
+          @click-pagination="setCurrentPage"
+          :pageCount="catalogPosts.length"
+        />
       </section>
     </div>
   </main>
@@ -23,12 +35,17 @@ import catalogSearch from "@/components/app-search/app-search.vue";
 import appHeader from "@/components/app-header/app-header.vue";
 import catalogItem from "@/components/catalog/catalog-item.vue";
 import catalogPagination from "@/components/pagination/app-pagination.vue";
+import resultsCards from "@/components/all-result-cards.vue";
+import catalogSort from "@/components/sort/app-sort.vue";
 
-import { getCatalogPosts } from "@/api-fetch-posts.js";
 export default {
   name: "App",
   data() {
     return {
+      searchText: "",
+      currentPage: 1,
+      maxOnePageCards: 3,
+      windowWidht: 0,
       catalogPosts: [
         {
           id: 3,
@@ -116,15 +133,65 @@ export default {
       ],
     };
   },
-  components: { appHeader, catalogSearch, catalogItem, catalogPagination },
+  components: {
+    appHeader,
+    catalogSearch,
+    catalogItem,
+    catalogPagination,
+    resultsCards,
+    catalogSort,
+  },
+  created() {
+    window.addEventListener("resize", this.widthWindow);
+    this.widthWindow();
+  },
   methods: {
-    parseData() {
-      getCatalogPosts();
+    widthWindow() {
+      this.windowWidht = window.innerWidth;
+      this.maxOnePageCards = this.allPages;
+    },
+    setCurrentPage(value) {
+      this.currentPage = value;
+    },
+    setSearchText(value) {
+      this.searchText = value;
+    },
+  },
+  computed: {
+    allPages() {
+      if (this.windowWidht > 1200) {
+        return 9;
+      } else if (this.windowWidht > 567) {
+        return 6;
+      } else {
+        return 3;
+      }
+    },
+    startPage() {
+      return (this.currentPage - 1) * this.maxOnePageCards;
+    },
+    endPage() {
+      return this.currentPage * this.maxOnePageCards;
+    },
+    getCatalogPagination() {
+      return this.catalogPosts.slice(this.startPage, this.endPage);
+    },
+
+    filterSearchCatalogCard() {
+      return this.catalogPosts.filter(
+        (item) =>
+          item.title.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          item.series.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    },
+    searchCatalodResults() {
+      return this.searchText !== ""
+        ? this.filterSearchCatalogCard
+        : this.getCatalogPagination;
     },
   },
 };
 </script>
-
 <style lang="scss">
 #app {
   font-family: FuturaPT, normal;
@@ -137,6 +204,12 @@ export default {
 }
 .catalog {
   &__title {
+  }
+
+  &__row-top {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
   }
 
   &__list {
